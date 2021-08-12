@@ -10,3 +10,5 @@ The solution will use the following services:
 * App Service
 * Azure Maps
 * Power BI
+
+<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Realtime%20Vehicle%20Tracking%20Lab%20Architecture.png>
