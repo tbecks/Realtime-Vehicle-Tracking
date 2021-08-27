@@ -4,6 +4,7 @@ This solution is intended to simulate a vechicle tracking solution in real-time 
 
 The solution will use the following services:
 * Local Python script - to publish tracking coordinates
+* Data files with vehicle tracking data
 * IoT Hub
 * Azure Functions
 * SignalR
@@ -12,3 +13,7 @@ The solution will use the following services:
 * Power BI
 
 <img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Realtime%20Vehicle%20Tracking%20Lab%20Architecture.png>
+
+# Setup IoT Hub for Data Publishing
+
+
