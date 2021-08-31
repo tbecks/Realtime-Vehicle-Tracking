@@ -14,6 +14,4 @@ The solution will use the following services:
 
 <img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Realtime%20Vehicle%20Tracking%20Lab%20Architecture.png>
 
-# Setup IoT Hub for Data Publishing
-
-
+Use the [Solution Deployment Guide](https://github.com/tbecks/Realtime-Vehicle-Tracking/edit/main/docs/SolutionDeploymentGuide.md) to walk through the steps to deploy the Realtime Vehicle Tracking solution in your own environment.
