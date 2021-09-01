@@ -2,10 +2,13 @@ import csv
 import requests
 import time
 
+# Replace the following variables with your information
 sas = 'SharedAccessSignature sr=VehicleTrackingIoT.azure-devices.net%2Fdevices%2FMineVehicle&sig=zdSFl1ruenK%2FGxWftM9Ddp36vsLJiS0FQVzjCdPpglg%3D&se=1630446520'
-
+#sas = <REPLACE WITH YOUR SAS TOKEN>
 iotHub = 'VehicleTrackingIoT'
 deviceId = 'MineVehicle'
+
+
 api = '2018-06-30'
 restUri = "https://"+iotHub+".azure-devices.net/devices/"+deviceId+"/messages/events?api-version="+api
 count = 0
