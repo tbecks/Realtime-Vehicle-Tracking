@@ -1,6 +1,8 @@
 # Realtime Vehicle Tracking Solution Deployment Guide
 This guide can be used to manually deploy the solution within your own environment.
 
+<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Realtime%20Vehicle%20Tracking%20Lab%20Architecture.png>
+
 1. [Prerequisites to deploy the solution](#prerequisites-to-deploy-the-solution)
 2. Setup IoT Hub for Data Publishing
 
@@ -13,19 +15,21 @@ This guide can be used to manually deploy the solution within your own environme
 ### Setup IoT Hub for Data Publishing
 The first step is to setup the IoT Hub to receive messages from the vehicles. Create a simple B1: Basic Tier IoT Hub, with a Public endpoint and a unique name.
 
-<screen shot2>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub.png width=600>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub2.png width=600>
   
 Once the IoT Hub is provisioned, go in and create a new device for data capture:
   
-<screen shot3>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub3-NewDevice.png width=600>
   
 Create a device called **MineVehicle**:
   
-<screen shot4>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub4-CreateDevice.png width=600>
   
 Click Refresh to see the newly created device.  
 
-<screen shot 5>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub5-Device.png width=600>
 
 This device will be the intended recipient of the vehicle telemetry events.  Even though our payload will be sending events from multiple vehicles, we can have a single device configured in IoT Hub to act as the recipient device.  The next step will be to get a SAS token that the data producer will use to connect to the IoT Hub and send events.
 
@@ -35,11 +39,11 @@ A Shared Access Signature (SAS) token will be required to enable our event gener
 1. VS Code using the [Azure IoT Hub Extension](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-toolkit)
 2. [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/iot/hub?view=azure-cli-latest#az_iot_hub_generate_sas_token)
 
-For this lab we will walk through the Azure CLI method.  Start by opening up a command prompt and running **az login**
+For this lab we will walk through the Azure CLI method.  Start by opening up a command prompt and running `az login`
 
-Once logged in, generate the token by running: **az iot hub generate-sas-token -d {device_id} -n {iothub_name}**
+Once logged in, generate the token by running: `az iot hub generate-sas-token -d {device_id} -n {iothub_name}`
 
-<screen shot 7>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub7-SASToken.png width=600>
 
 ## Setup Python Vehicle Data Producer
 To simulate vehicle telemetry being sent to 
