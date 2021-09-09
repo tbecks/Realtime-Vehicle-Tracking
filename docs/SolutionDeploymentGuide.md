@@ -12,6 +12,8 @@ This guide can be used to manually deploy the solution within your own environme
 * Install VS Code or Azure CLI
 
 ## IoT Hub Configuration
+--<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Logo-IoTHub.jpg width=100>
+
 ### Setup IoT Hub for Data Publishing
 The first step is to setup the IoT Hub to receive messages from the vehicles. Create a simple B1: Basic Tier IoT Hub, with a Public endpoint and a unique name.
 
@@ -45,5 +47,64 @@ Once logged in, generate the token by running: `az iot hub generate-sas-token -d
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub7-SASToken.png width=600>
 
+You will need to use the returned SAS token and update the Python based producer in the next steps.
+
 ## Setup Python Vehicle Data Producer
-To simulate vehicle telemetry being sent to 
+To simulate vehicle telemetry being sent to IoT Hub, we will use a Python script to send telemetry data that has been stored in a CSV data file.  The data file is located in the data folder of this repo, and will be referenced by the Python script.
+
+### Update the Python Producer with your environment information
+Open the **SendVehicleEvents.py** file in VS Code (or any text editor).  This file can be found in the **/src** folder.
+
+In the file look for the section below `# Replace the following variables with your information`.  You will need to update the following variables:
+- `sas`
+- `iotHub`
+- `deviceId`
+
+### Test the Producer
+To test that the Python producer is configured to send data to IoT Hub run...... **FINISH THIS**
+
+## Azure Functions Configuration
+<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Logo-AzureFunctions.png width=100>
+Azure Functions will be used to pull data from IoT Hub, negotiate a connection with the front end application server and push the events to SignalR which will push the data over a web socket to the web appliation.
+
+There will be two functions used:
+
+1. VehicleDataChangeFeed - this function will trigger on events arriving at IoT Hub and pushed to the web front end through SignalR
+2. SignalRNegotciate - establishes the web hook connection between SignalR and the Web App.
+
+Start by configuring an Azure Function instance in Azure:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzureFunction-1.png width=600>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzureFunction-2.png width=600>
+
+There is no requirement to have Application Insight Enabled.
+
+Once provisioned, we need to create a new Function and deploy the provided code to the function.  In the Azure Function create a new function:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzureFunction-5.png width=600>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzureFunction-6.png width=600>
+
+
+
+Download the #Azure Function source code# and open the VehicleHubPull folder in VS Code:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzureFunction-3.png width=600>
+
+Update the `local.settings.json` file with your environment values:
+
+  |Configuration Parameter|Where to Get Value|
+  |---|---|
+  |AzureWebJobsStorage|(insert link)|
+  |AzureIOTHubConnectionString|(insert link)|
+  |AzureSignalRConnectionString|(insert link)|
+  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzureFunction-4.png width=600>
+
+  
+## SignalR Configuration
+<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Logo-SignalR.png width=100>
+Blurb on SignalR
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-SignalR-1.png width=600>
+
+Keep the default Public endpoint for this lab.
