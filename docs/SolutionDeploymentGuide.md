@@ -63,14 +63,23 @@ In the file look for the section below `# Replace the following variables with y
 ### Test the Producer
 To test that the Python producer is configured to send data to IoT Hub run...... **FINISH THIS**
 
+## SignalR Configuration
+<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Logo-SignalR.png width=100>
+*Blurb on SignalR*
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-SignalR-1.png width=600>
+
+Keep the default Public endpoint for this lab.  Once provisioned go in to the overview of you SignalR service and make note of the *connection string:* 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-SignalR-2.png width=600>
+
 ## Azure Functions Configuration
 <img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Logo-AzureFunctions.png width=100>
 Azure Functions will be used to pull data from IoT Hub, negotiate a connection with the front end application server and push the events to SignalR which will push the data over a web socket to the web appliation.
 
-There will be two functions used:
+The function serves two purposes:
 
-1. VehicleDataChangeFeed - this function will trigger on events arriving at IoT Hub and pushed to the web front end through SignalR
-2. SignalRNegotciate - establishes the web hook connection between SignalR and the Web App.
+1. Request new events from IoT Hub 
+2. Negotiate SignalR Connection to Web App 
 
 Start by configuring an Azure Function instance in Azure:
 
@@ -79,18 +88,12 @@ Start by configuring an Azure Function instance in Azure:
 
 There is no requirement to have Application Insight Enabled.
 
-Once provisioned, we need to create a new Function and deploy the provided code to the function.  In the Azure Function create a new function:
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzureFunction-5.png width=600>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzureFunction-6.png width=600>
-
-
-
-Download the #Azure Function source code# and open the VehicleHubPull folder in VS Code:
+Once provisioned, we need to deploy the provided code to the Azure Function service to create the new functions.  Download the #Azure Function source code# and open the VehicleHubPull folder in VS Code:
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzureFunction-3.png width=600>
 
 Update the `local.settings.json` file with your environment values:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzureFunction-4.png width=600>
 
   |Configuration Parameter|Where to Get Value|
   |---|---|
@@ -98,13 +101,20 @@ Update the `local.settings.json` file with your environment values:
   |AzureIOTHubConnectionString|(insert link)|
   |AzureSignalRConnectionString|(insert link)|
   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzureFunction-4.png width=600>
+`Build` and `Deploy` the project to the Azure Functions service.  From the VS Code terminal window run `dotnet build` (or right click the project file and select **Build .NET Core project**).  Once build deploy the solution in VS Code by running the following commands:
 
-  
-## SignalR Configuration
-<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Logo-SignalR.png width=100>
-Blurb on SignalR
+- Open the Command Pallette (Ctl-Shift-P)
+- Type `Azure Functions: Deploy to function app`
+- Walk through the prompts to deploy to the Azure Functions service you deployed previously
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-SignalR-1.png width=600>
+Ensure the funciton successfully deploys.
 
-Keep the default Public endpoint for this lab.
+## Azure App Service
+The App Service will provide the web based front end.  Create a App Service instance in the Azure Portal:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AppService-1.png width=600>
+
+Make note of the App Service URL, this will be used to access the web front end from a browser.
+
+
+## Azure Maps Deployment
+
