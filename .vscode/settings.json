@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/8bad44a0-cca3-4780-9136-ddf863e9c35b/resourceGroups/RealtimeVehicleTracking/providers/Microsoft.Web/sites/realtimevehicletracking",
+    "appService.deploySubpath": "web"
+}
