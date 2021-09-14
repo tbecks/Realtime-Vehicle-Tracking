@@ -238,7 +238,7 @@
 
         // load water body data
         function loadWaterData(datasource) {
-        fetch('https://vehicletracking.z5.web.core.windows.net/data/waterbodies.json').then(response => response.json()).then(body => {
+        fetch('https://realtimevehicletracking.azurewebsites.net/data/waterbodies.json').then(response => response.json()).then(body => {
             datasource.add(body)
         })
         }
