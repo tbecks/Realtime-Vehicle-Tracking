@@ -72,6 +72,15 @@ To test that the Python producer is configured to send data to IoT Hub run......
 Keep the default Public endpoint for this lab.  Once provisioned go in to the overview of you SignalR service and make note of the *connection string:* 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-SignalR-2.png width=600>
 
+## Azure Maps Deployment
+Azure Maps will be used to render the data over satelite.  
+
+1. Create a new Azure Maps Service:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzureMaps-1.png width=600>
+
+2. Once deployed make note of the Key.  This will be used when we configure the Azure Functions:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzureMaps-2.png width=600>
+
 ## Azure Functions Configuration
 <img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Logo-AzureFunctions.png width=100>
 Azure Functions will be used to pull data from IoT Hub, negotiate a connection with the front end application server and push the events to SignalR which will push the data over a web socket to the web appliation.
@@ -127,5 +136,5 @@ This will open the command pallet at the top, follow the steps to choose which f
 -   configure > web sockets on?
 
 
-## Azure Maps Deployment
+
 
