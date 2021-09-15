@@ -113,7 +113,18 @@ Ensure the funciton successfully deploys.
 The App Service will provide the web based front end.  Create a App Service instance in the Azure Portal:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AppService-1.png width=600>
 
-Make note of the App Service URL, this will be used to access the web front end from a browser.
+The name needs to be unique and will form your sites URL.  Select PHP as the runtime stack as we are using a simple HTML page with Javascript.  Make note of the App Service URL, this will be used to access the web front end from a browser.
+
+Open VS Code and ensure you have the Azure App Service extension installed:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AppService-3.png width=600>
+
+Then Open the Azure blade and navigate to the Azure App Service section to deploy the web source code to the App Service in Azure:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AppService-2.png width=600>
+
+This will open the command pallet at the top, follow the steps to choose which folder to deploy to your App Service:
+- Navigate to the web folder of the solution repo
+- settings:
+-   configure > web sockets on?
 
 
 ## Azure Maps Deployment
