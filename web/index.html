@@ -168,7 +168,7 @@
 
 
         function GetConnectionInfo() {
-            return axios.get(baseurl + '/api/signalrnegociate') //?code=7gtVUWFtQhZKqnoMN0WIynAptzk1k0xAS1mfCFE1zuI=') //authentication removed
+            return axios.get(baseurl + '/api/signalrnegociate?code=7gtVUWFtQhZKqnoMN0WIynAptzk1k0xAS1mfCFE1zuI=') //authentication removed
                 .then(function (response) {
                     return response.data
                 }).catch(console.error)
