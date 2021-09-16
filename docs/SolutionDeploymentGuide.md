@@ -36,20 +36,23 @@ The first step is to get the data ingested into our solution.  IoT Hub is the la
 |Resource Group   |Create a new Resource Group called **RealtimeVehicleTracking**
 |IoT Hub Name     |Create a globally unique name ie. *VehicleTrackingIoT*
 |Region           |Choose a region that you will deploy all your services to
+|Pricing and Scale Tier |B1 Basic
+
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub.png width=600>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub2.png width=600>
   
-Once the IoT Hub is provisioned, go in and create a new device for data capture:
-  
+5. Once the IoT Hub is provisioned, click on **IoT Devices** to go in and create a new device, within the IoT Hub, used for data capture:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub3-Devices.png width=600>
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub3-NewDevice.png width=600>
   
-Create a device called **MineVehicle**:
+6. Create a device called **MineVehicle**:
   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub4-CreateDevice.png width=600>
   
-Click Refresh to see the newly created device.  
+7. Click Refresh to see the newly created device.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub5-Device.png width=600>
 
@@ -70,10 +73,13 @@ Once logged in, generate the token by running: `az iot hub generate-sas-token -d
 You will need to use the returned SAS token and update the Python based producer in the next steps.
 
 ## Setup Python Vehicle Data Producer
+<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Logo-Python.png width=100>
+
 To simulate vehicle telemetry events being sent to IoT Hub, we will use a Python script to send telemetry data that has been stored in a CSV data file.  The data file is located in the data folder of this repo, and will be referenced by the Python script. The data in the event consists of asset (vehicle) information and asset location.
 
 |EquipmentID|Latitude|Longitude|
 |---|---|---|
+
 
 ### Update the Python Producer with your environment information
 Open the **SendVehicleEvents.py** file in VS Code (or any text editor).  This file can be found in the **/src** folder.
