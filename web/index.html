@@ -106,6 +106,7 @@
 
                     StartConnection(connection)
 
+                    // Establish the connection
                     connection.on('newDiggerData', ProcessVehicleData)
 
                     connection.onclose(function () {
@@ -158,7 +159,7 @@
             }
 
              //Logging:
-             console.log(vehicleJson);
+             //console.log(vehicleJson);
              console.log(datasource);
              console.log(vehicleJson.VehicleType);
             // console.log(newVehiclePin)
@@ -167,7 +168,7 @@
 
 
         function GetConnectionInfo() {
-            return axios.get(baseurl + '/api/signalrnegociate?code=7gtVUWFtQhZKqnoMN0WIynAptzk1k0xAS1mfCFE1zuI=')
+            return axios.get(baseurl + '/api/signalrnegociate') //?code=7gtVUWFtQhZKqnoMN0WIynAptzk1k0xAS1mfCFE1zuI=') //authentication removed
                 .then(function (response) {
                     return response.data
                 }).catch(console.error)
