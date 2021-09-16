@@ -17,7 +17,7 @@ namespace SignalR
     {
         private static HttpClient client = new HttpClient();
 
-        [FunctionName("SignalRPush")]
+        [FunctionName("messages")]
         public static async Task RunAsync(
             [IoTHubTrigger(
                 "messages/events", 
@@ -34,7 +34,7 @@ namespace SignalR
         }
 
 
-        [FunctionName("SignalRNegociate")]
+        [FunctionName("negotiate")]
         public static IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Anonymous)] HttpRequest req,
             [SignalRConnectionInfo(HubName = "maphub")] SignalRConnectionInfo connectionInfo,
