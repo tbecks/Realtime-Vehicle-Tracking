@@ -11,25 +11,48 @@ This guide can be used to manually deploy the solution within your own environme
 * Create an Azure Resource Group called **RealtimeVehicleTracking**
 * Install VS Code or Azure CLI
 
-## IoT Hub Configuration
---<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Logo-IoTHub.jpg width=100>
+---
+# Part 1: Data Ingestion
+The first step is to get the data ingested into our solution.  IoT Hub is the landing service used to receive events from the field and enable downstream events to subscribe and recive those events.  An event is purely a package of data, in our case represented by the vehicle id and its location.
 
-### Setup IoT Hub for Data Publishing
-The first step is to setup the IoT Hub to receive messages from the vehicles. Create a simple B1: Basic Tier IoT Hub, with a Public endpoint and a unique name.
+
+
+## IoT Hub Configuration
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Logo-IoTHub.jpg width=100>
+
+### Create a new IoT Hub Service
+[Azure IoT Hub](https://docs.microsoft.com/en-us/azure/iot-hub/) is a cloud hosted service that acts as a central cloud based message hub for receiving telemetry events from field devices.  Downstream consumers will connect to IoT Hub to subscribe to the event stream for additional processing, alerting or analytics use cases.  In our use case simulated vehicle events will stream to Azure through an IoT Hub.
+
+1. Login to the [Azure portal](https://portal.azure.com) using your Azure AAD login.
+
+2. From the upper left corner select **Create a resource**
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzurePortal-1.png width=600>
+
+4. Create a simple B1: Basic Tier IoT Hub, with a Public endpoint and a unique name:
+
+|Name             |Value|
+|---              |---|
+|Subscription     |Select the subscription to deploy the solution in
+|Resource Group   |Create a new Resource Group called **RealtimeVehicleTracking**
+|IoT Hub Name     |Create a globally unique name ie. *VehicleTrackingIoT*
+|Region           |Choose a region that you will deploy all your services to
+|Pricing and Scale Tier |B1 Basic
+
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub.png width=600>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub2.png width=600>
   
-Once the IoT Hub is provisioned, go in and create a new device for data capture:
-  
+5. Once the IoT Hub is provisioned, click on **IoT Devices** to go in and create a new device, within the IoT Hub, used for data capture:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub3-Devices.png width=600>
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub3-NewDevice.png width=600>
   
-Create a device called **MineVehicle**:
+6. Create a device called **MineVehicle**:
   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub4-CreateDevice.png width=600>
   
-Click Refresh to see the newly created device.  
+7. Click Refresh to see the newly created device.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub5-Device.png width=600>
 
@@ -50,7 +73,13 @@ Once logged in, generate the token by running: `az iot hub generate-sas-token -d
 You will need to use the returned SAS token and update the Python based producer in the next steps.
 
 ## Setup Python Vehicle Data Producer
-To simulate vehicle telemetry being sent to IoT Hub, we will use a Python script to send telemetry data that has been stored in a CSV data file.  The data file is located in the data folder of this repo, and will be referenced by the Python script.
+<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Logo-Python.png width=100>
+
+To simulate vehicle telemetry events being sent to IoT Hub, we will use a Python script to send telemetry data that has been stored in a CSV data file.  The data file is located in the data folder of this repo, and will be referenced by the Python script. The data in the event consists of asset (vehicle) information and asset location.
+
+|EquipmentID|Latitude|Longitude|
+|---|---|---|
+
 
 ### Update the Python Producer with your environment information
 Open the **SendVehicleEvents.py** file in VS Code (or any text editor).  This file can be found in the **/src** folder.
@@ -71,6 +100,15 @@ To test that the Python producer is configured to send data to IoT Hub run......
 
 Keep the default Public endpoint for this lab.  Once provisioned go in to the overview of you SignalR service and make note of the *connection string:* 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-SignalR-2.png width=600>
+
+## Azure Maps Deployment
+Azure Maps will be used to render the data over satelite.  
+
+1. Create a new Azure Maps Service:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzureMaps-1.png width=600>
+
+2. Once deployed make note of the Key.  This will be used when we configure the Azure Functions:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzureMaps-2.png width=600>
 
 ## Azure Functions Configuration
 <img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Logo-AzureFunctions.png width=100>
@@ -127,5 +165,5 @@ This will open the command pallet at the top, follow the steps to choose which f
 -   configure > web sockets on?
 
 
-## Azure Maps Deployment
+
 
