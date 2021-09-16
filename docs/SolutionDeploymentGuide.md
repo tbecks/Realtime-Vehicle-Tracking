@@ -91,6 +91,10 @@ In the file look for the section below `# Replace the following variables with y
 
 ### Test the Producer
 To test that the Python producer is configured to send data to IoT Hub run...... **FINISH THIS**
+- use Azure CLI with 
+- Create a new consumer group
+- az iot hub monitor-events -n {iothub_name} -d {device_id} --cg {consumer_group_name}
+- az iot hub monitor-events -n VehicleTrackingIoT -d MineVehicle -cg cli
 
 ## SignalR Configuration
 <img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Logo-SignalR.png width=100>
@@ -116,8 +120,8 @@ Azure Functions will be used to pull data from IoT Hub, negotiate a connection w
 
 The function serves two purposes:
 
-1. Request new events from IoT Hub 
-2. Negotiate SignalR Connection to Web App 
+1. *SignalRPush* - Request new events from IoT Hub 
+2. *SignalRNegotiate* - Negotiate SignalR Connection to Web App 
 
 Start by configuring an Azure Function instance in Azure:
 
@@ -130,7 +134,17 @@ Once provisioned, we need to deploy the provided code to the Azure Function serv
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzureFunction-3.png width=600>
 
-Update the `local.settings.json` file with your environment values:
+FIX THIS:
+- log into azure, go into azure function > configuration and add the following settings:
+- `AzureWebJobsStorage` 
+- `FUNCTIONS_WORKER_RUNTIME`
+- `AzureIOTHubConnectionString`
+- `AzureSignalRConnectionString`
+
+*Note: Bicep template will create the functions and configuration*
+- ADD SCREEN SHOT 
+
+These settings can also be found in the `local.settings.json` file with your environment values:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzureFunction-4.png width=600>
 
   |Configuration Parameter|Where to Get Value|
@@ -165,5 +179,9 @@ This will open the command pallet at the top, follow the steps to choose which f
 -   configure > web sockets on?
 
 
-
-
+# Part 4: Extended Use Cases #
+## Data Lake Historical Data Capture #
+To persist data long term for the purposes of analytics:
+- create a new Data Lake Storage Account
+- create a route in IoT Hub to send data to the Data Lake Container
+- create a new Default route (this is critical as creating a custom route will shut off the existing default route so you will need to explicitly create a new one
