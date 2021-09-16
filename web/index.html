@@ -17,11 +17,11 @@
     <!-- Promise based http client. https://github.com/axios/axios -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!-- SignalR -->
-    <script src="https://unpkg.com/@aspnet/signalr@1.0.2/dist/browser/signalr.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.7/signalr.min.js"></script>
 
     <script>
         // const baseurl = 'http://localhost:7071';
-        const baseurl = 'https://realtimevehicletracking.azurewebsites.net';
+        const baseurl = 'https://vehiclehubpull.azurewebsites.net';
         var map, tileLayer;
         var weatherTileUrl = 'https://{azMapsDomain}/map/tile?api-version=2.0&tilesetId={layerName}&zoom={z}&x={x}&y={y}';
 
@@ -102,32 +102,33 @@
 
                     const connection = new signalR.HubConnectionBuilder()
                         .withUrl(info.url, options)
-                        .build()
+                        .configureLogging(signalR.LogLevel.Information)
+                        .build();
 
-                    StartConnection(connection)
+                    StartConnection(connection);
 
-                    connection.on('newDiggerData', ProcessVehicleData)
+                    connection.on('newVehicleData', ProcessVehicleData);
 
                     connection.onclose(function () {
                         console.log('disconnected')
                         setTimeout(function () { StartConnection(connection) }, 5000)
-                    })
+                    });
                 }).catch(console.error)
 
-                        //Create a popup but leave it closed so we can update it and display it later.
-                        popup = new atlas.Popup({
-                            position: [0, 0],
-                            pixelOffset: [0, -18]
-                        });
-                        //Close the popup when the mouse moves on the map.
-                        map.events.add('mousemove', closePopup);
-                        /**
-                         * Open the popup on mouse move or touchstart on the symbol layer.
-                         * Mouse move is used as mouseover only fires when the mouse initially goes over a symbol. 
-                         * If two symbols overlap, moving the mouse from one to the other won't trigger the event for the new shape as the mouse is still over the layer.
-                         */
-                        map.events.add('mousemove', symbolLayer, symbolHovered);
-                        map.events.add('touchstart', symbolLayer, symbolHovered);
+                //Create a popup but leave it closed so we can update it and display it later.
+                popup = new atlas.Popup({
+                    position: [0, 0],
+                    pixelOffset: [0, -18]
+                });
+                //Close the popup when the mouse moves on the map.
+                map.events.add('mousemove', closePopup);
+                /**
+                 * Open the popup on mouse move or touchstart on the symbol layer.
+                 * Mouse move is used as mouseover only fires when the mouse initially goes over a symbol. 
+                 * If two symbols overlap, moving the mouse from one to the other won't trigger the event for the new shape as the mouse is still over the layer.
+                 */
+                map.events.add('mousemove', symbolLayer, symbolHovered);
+                map.events.add('touchstart', symbolLayer, symbolHovered);
 
             });
         }
@@ -167,7 +168,7 @@
 
 
         function GetConnectionInfo() {
-            return axios.get(baseurl + '/api/signalrnegociate?code=7gtVUWFtQhZKqnoMN0WIynAptzk1k0xAS1mfCFE1zuI=')
+            return axios.get(baseurl + '/api/negotiate')
                 .then(function (response) {
                     return response.data
                 }).catch(console.error)
