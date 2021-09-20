@@ -3,7 +3,7 @@ import requests
 import time
 
 # Replace the following variables with your information
-sas = 'SharedAccessSignature sr=VehicleTrackingIoT.azure-devices.net%2Fdevices%2FMineVehicle&sig=Dw3RJxkTIQGKwTxmnQxMWBYEGyOMx8zc7EtGMtwINtY%3D&se=1631812265'
+sas = 'SharedAccessSignature sr=VehicleTrackingIoT.azure-devices.net%2Fdevices%2FMineVehicle&sig=qopZ6FVlHeFoHm%2F7wLMWSWfZqL8yrvuUNTtKxl%2FqQWM%3D&se=1635154402'
 #sas = <REPLACE WITH YOUR SAS TOKEN>
 iotHub = 'VehicleTrackingIoT'
 deviceId = 'MineVehicle'
