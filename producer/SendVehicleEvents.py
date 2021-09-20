@@ -20,4 +20,4 @@ with open('../data/AllVehicles.csv') as f:
         payload = {"EquipmentID" : row[4], "Longtitude": row[3], "Latitude": row[2], "VehicleType": row[1], "RowKey" : count}
         r = requests.post(restUri, json=payload, headers = {'Authorization':sas})
         print(payload)
-        time.sleep(0.8)
+        time.sleep(0.3)
