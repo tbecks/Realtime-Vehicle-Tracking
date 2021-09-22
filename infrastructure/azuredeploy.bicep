@@ -1,5 +1,4 @@
 param projectName string = ''
-param utcValue string = utcNow()
 
 var location = resourceGroup().location
 
