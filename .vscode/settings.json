@@ -1,9 +1,0 @@
-{
-    "appService.defaultWebAppToDeploy": "/subscriptions/8bad44a0-cca3-4780-9136-ddf863e9c35b/resourceGroups/RealtimeVehicleTracking/providers/Microsoft.Web/sites/realtimevehicletracking",
-    "appService.deploySubpath": "web",
-    "azureFunctions.deploySubpath": "functions/bin/Release/netcoreapp2.1/publish",
-    "azureFunctions.projectLanguage": "C#",
-    "azureFunctions.projectRuntime": "~2",
-    "debug.internalConsoleOptions": "neverOpen",
-    "azureFunctions.preDeployTask": "publish (functions)"
-}
