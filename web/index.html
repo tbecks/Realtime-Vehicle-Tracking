@@ -145,7 +145,7 @@
             if (datasource.shapesMap.has(vehicleJson.EquipmentID))
             {
                 var coords = [ parseFloat(vehicleJson.Longtitude), parseFloat(vehicleJson.Latitude) ]
-                console.log('prposed-coords', vehicleJson.EquipmentID, coords)
+                console.log('Vehicle Coordinates: ', vehicleJson.EquipmentID, coords)
                 atlas.animations.setCoordinates(vehicles[vehicleJson.EquipmentID], coords, { duration: 3000, autoPlay: true });
 
             } else {
@@ -163,8 +163,9 @@
 
              //Logging:
              //console.log(vehicleJson);
-             console.log(datasource);
+             //console.log(datasource);
              console.log(vehicleJson.VehicleType);
+             console.log(vehicleJson);
             // console.log(newVehiclePin)
         }
 
