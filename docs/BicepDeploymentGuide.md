@@ -7,7 +7,7 @@ This guide can be used to  deploy the solution within your own environment using
 * Install Azure CLI
 
 # Part 1: Deploy Infrastructure
-The first step is to deploy the Bicep Template, one simple commmand will do the trick
+The first step is to deploy the Bicep Template, one simple commmand will do the trick. From the root of the repo, browse to ./infrastructure with your CLI and run the following:
 
 `az deployment group create -f azuredeploy.bicep -g RealtimeVehicleTracking --parameters projectName=**YOURPROJECTNAME**`
 
