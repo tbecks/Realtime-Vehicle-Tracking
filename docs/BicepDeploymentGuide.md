@@ -16,11 +16,20 @@ Please denote two things
 - `projectName=**YOURPROJECTNAME**` please replace this with your own chosen name
 
 
-Once this has been deployed, you will see some outputs in the JSON;
-- Website URL
-- Function App URL 
-- IOT Hub Name
-save these for later
+Once this has been deployed, you will see some outputs in the JSON.. for example:
+```    
+"outputs": {
+      "importantInfo": {
+        "type": "Object",
+        "value": {
+          "FunctionSite": "https://adamvtfuncapphqzefvnhni.azurewebsites.net/",
+          "WebSite": "https://adamvtwebhqzefvnhni.azurewebsites.net/",
+          "iotHubName": "adamvtHubhqzefvnhni"
+        }
+      }
+}
+```
+save these for later, we'll need them further down
 
 # Part 2: Create IOT Device
 After we have our infra, we can create the device via the CLI:
@@ -48,7 +57,7 @@ After this, if you run the python script, you should be able to see messages flo
 # Part 4: Edit Code
 We need to point our js code to look at the functions we are going to build.. To do so open up ./web/index.html.
 
-On line 25, replace the URL with the Function App URL from the outputs you got when you deployed the bicep template: `const baseurl = 'https://yourfunctionhere.azurewebsites.net';`
+On line 25, replace the URL with the Function App URL from the outputs you got when you deployed the bicep template: `const baseurl = 'https://yourfunctionhere.azurewebsites.net';` **DENOTE NO TRAILING SLASH HERE**
 
 Save this file.
 

@@ -180,5 +180,6 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
 
 output importantInfo object = {
   iotHubName: iotHubName
-  signalRNegotiatePath: 'https://${funcApp.name}.azurewebsites.net/api/negotiate'
+  FunctionSite: 'https://${funcApp.name}.azurewebsites.net/'
+  WebSite: 'https://${appService.name}.azurewebsites.net/'
 }
