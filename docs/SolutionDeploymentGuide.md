@@ -202,6 +202,11 @@ This will open the command pallet at the top, follow the steps to choose which f
 - settings:
 -   configure > web sockets on?
 
+# Part 5: Running the Solution #
+- open map
+- start producer
+- watch vehicles move around
+-
 
 # Part 4: Extended Use Cases #
 ## Data Lake Historical Data Capture #
@@ -209,3 +214,12 @@ To persist data long term for the purposes of analytics:
 - create a new Data Lake Storage Account
 - create a route in IoT Hub to send data to the Data Lake Container
 - create a new Default route (this is critical as creating a custom route will shut off the existing default route so you will need to explicitly create a new one
+
+## Data Transformation with Azure Stream Analytics #
+- using ASA jobs to transform daa
+
+## Data Transformation with Databricks Spark Streaming Job #
+- using a spark streaming job to process and persist data
+
+## Visualize Data with Power BI #
+- using Power BI to visualize data
