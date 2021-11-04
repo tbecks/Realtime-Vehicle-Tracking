@@ -99,11 +99,22 @@ In the file look for the section below `# Replace the following variables with y
 ### Test the Producer
 We now want to test that we can successfully send data from our Python data producer to our IoT Hub.  This will validate that the producer is properly configured and the solution is receiving data in Azure.  The easiest way to verify that data is arriving on the IoT Hub is to use the Azure CLI commands:
 
-1. Open a command line
-- use Azure CLI with 
-- Create a new consumer group
-- az iot hub monitor-events -n {iothub_name} -d {device_id} --cg {consumer_group_name}
-- az iot hub monitor-events -n VehicleTrackingIoT -d MineVehicle -cg cli
+1. Open a command promp (can be run by typing cmd in the Start menu)
+2. Type `az login` and login to your Azure account (you will need to have [Azure CLI installed](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli) for this to work)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-Producer-1.png width=300>
+
+
+3. Once logged in run the following command to start monitoring your IoT Hub device for events:
+    **az iot hub monitor-events -n {iothub_name} -d {device_id} --cg {consumer_group_name}**
+    
+    For example: `az iot hub monitor-events -n VehicleTrackingIoT -d MineVehicle --cg cli`
+    
+4. You should now see the CLI waiting for events to arrive.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-Producer-2.png width=300>
+
+5. Go back into VS Code and with the SendVehicleEvents.py file open use the Play button drop down in the top right corner and select **Run Python File in Terminal** (or go to the top menu and select **Run > Start Debugging**)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-Producer-3.png width=300>
+
 
 ---
 # Part 2: Data Processing
