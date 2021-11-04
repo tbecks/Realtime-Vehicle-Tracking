@@ -73,7 +73,9 @@ A Shared Access Signature (SAS) token will be required to enable our event gener
 
 For this lab we will walk through the Azure CLI method.  Start by opening up a command prompt and running `az login`
 
-Once logged in, generate the token by running: `az iot hub generate-sas-token -d {device_id} -n {iothub_name}`
+Once logged in, generate the token by running: `az iot hub generate-sas-token -d {device_id} -n {iothub_name} -r {resource_group_name} -d {duration in seconds}`
+
+The duration for the token is set in seconds, therefore to set the SAS token to be valid for a year run the following: `az iot hub generate-sas-token -d MineVehicle -n VehicleTrackingIoT -g RealtimeVehicleTracking  --duration 31536000`
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub7-SASToken.png width=600>
 
@@ -105,15 +107,21 @@ We now want to test that we can successfully send data from our Python data prod
 
 
 3. Once logged in run the following command to start monitoring your IoT Hub device for events:
-    **az iot hub monitor-events -n {iothub_name} -d {device_id} --cg {consumer_group_name}**
+    **az iot hub monitor-events -n {iothub_name} -d {device_id} -g {resource_group} --cg {consumer_group_name}**
     
-    For example: `az iot hub monitor-events -n VehicleTrackingIoT -d MineVehicle --cg cli`
+    For example: `az iot hub monitor-events -n VehicleTrackingIoT -d MineVehicle -g RealtimeVehicleTracking --cg cli`
     
 4. You should now see the CLI waiting for events to arrive.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-Producer-2.png width=300>
 
-5. Go back into VS Code and with the SendVehicleEvents.py file open use the Play button drop down in the top right corner and select **Run Python File in Terminal** (or go to the top menu and select **Run > Start Debugging**)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-Producer-3.png width=300>
+5. Go back into VS Code and select **Terminal > New Terminal** to open the terminal window in VS Code.  
+6. Run `cd producer` from the terminal prompt to go into the folder with the python producer, then run `py SendVehicleEvents.py` to run the producer.  You should see the producer connect to IoT Hub and events start to stream:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-Producer-4.png width=600>
+
+7. Go back to the Command Prompt window that was running the iot hub monitor events and you should start to see events streaming from IoT Hub to your cli window:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-Producer-5.png width=600>
+
+
 
 
 ---
