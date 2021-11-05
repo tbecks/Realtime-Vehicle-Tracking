@@ -227,7 +227,7 @@ To persist data long term for the purposes of analytics:
 - using ASA jobs to transform daa
 
 ## Data Transformation with Databricks Spark Streaming Job #
-- using a spark streaming job to process and persist data
+- using a spark streaming job to process and persist data 
 
 ## Visualize Data with Power BI #
 - using Power BI to visualize data
