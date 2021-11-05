@@ -4,12 +4,14 @@ This guide can be used to manually deploy the solution within your own environme
 <img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Realtime%20Vehicle%20Tracking%20Lab%20Architecture.png>
 
 1. [Prerequisites to deploy the solution](#prerequisites-to-deploy-the-solution)
-2. Setup IoT Hub for Data Publishing
+2. [Part 1: Data Ingestion)(#part-1:-data-ingestion)
 
 ## Prerequisites to deploy the solution
-* Azure account with subscription
-* Create an Azure Resource Group called **RealtimeVehicleTracking**
-* Install VS Code or Azure CLI
+The following will be required to complete the full deployment for the solution:
+* [Azure account](https://account.microsoft.com/account/) with [subscription](https://azure.microsoft.com/en-ca/free/)
+* [Create an Azure Resource Group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal#create-resource-groups) called **RealtimeVehicleTracking** which will be used to deploy the solution into
+* [Install VS Code](https://code.visualstudio.com/download) and [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
+* [Download the Github Solution Source Code](https://github.com/tbecks/Realtime-Vehicle-Tracking/archive/refs/heads/main.zip)
 
 ---
 # Part 1: Data Ingestion
@@ -162,24 +164,28 @@ Note: Keep the default Public endpoint for this lab.
 
 ## Azure Functions Configuration
 <img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Logo-AzureFunctions.png width=75>
-Azure Functions will be used to pull data from IoT Hub, negotiate a connection with the front end application server and push the events to SignalR which will push the data over a web socket to the web appliation.
+Azure Functions will be used to pull data from IoT Hub, negotiate a connection with the front end application server and push the events to SignalR which will push the data over a web socket on the web appliation.
 
-The function serves two purposes:
+There are two functions as part of the solution that we will be deploying:
 
-1. *SignalRPush* - Request new events from IoT Hub 
-2. *SignalRNegotiate* - Negotiate SignalR Connection to Web App 
+- *messages* - Request new events from IoT Hub 
+- *negotiate* - Negotiates a SignalR Connection to the Web App 
 
-Start by configuring an Azure Function instance in Azure:
+1. Start by deploying an Azure Function instance in Azure:
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzureFunction-0.png width=200>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzureFunction-1.png width=600>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzureFunction-2.png width=600>
 
-There is no requirement to have Application Insight Enabled.
+Note: There is no requirement to have Application Insight Enabled.
 
-Once provisioned, we need to deploy the provided code to the Azure Function service to create the new functions.  Download the #Azure Function source code# and open the VehicleHubPull folder in VS Code:
+2. Once the Function App service is provisioned, we need to deploy the provided code to the Azure Function service to create the new functions.  Ensure that you have downloaded the solution source code from GitHub and open with VS Code.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzureFunction-3.png width=600>
 
+  
+***** Ensure prerequisit has downloading the code locally. and opening with VS Code.
 FIX THIS:
 - log into azure, go into azure function > configuration and add the following settings:
 - `AzureWebJobsStorage` 
