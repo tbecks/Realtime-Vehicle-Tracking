@@ -121,6 +121,7 @@ We now want to test that we can successfully send data from our Python data prod
 7. Go back to the Command Prompt window that was running the iot hub monitor events and you should start to see events streaming from IoT Hub to your cli window:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-Producer-5.png width=600>
 
+This validates that we can subscribe to our IoT Hub and subscribe to the event stream.  Next step is consuming and visualizing that stream.
 
 
 
@@ -128,12 +129,16 @@ We now want to test that we can successfully send data from our Python data prod
 # Part 2: Data Processing
 ## SignalR Configuration
 <img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Logo-SignalR.png width=100>
-*Blurb on SignalR*
 
+[Azure SignalR Service](https://docs.microsoft.com/en-us/azure/azure-signalr/signalr-overview) simplifies the process of adding real-time web functionality to applications over HTTP web connections. This real-time functionality allows the service to push content updates to connected clients, such as a single page web or mobile application. Clients are updated without having to poll the server for new data.  For our solution SignalR will be used to push events to our Azure Maps web interface, however, there are many other destinations and use cases which this pattern supports.
+
+1. Create a new SignalR service from the Azure Portal.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-SignalR-1.png width=600>
 
-Keep the default Public endpoint for this lab.  Once provisioned go in to the overview of you SignalR service and make note of the *connection string:* 
+2. Once provisioned go in to the overview of you SignalR service and make note of the *connection string* as we will need to use this later on. 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-SignalR-2.png width=600>
+
+Note: Keep the default Public endpoint for this lab. 
 
 ---
 # Part 3: Data Visualization
