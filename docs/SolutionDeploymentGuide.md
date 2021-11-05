@@ -39,14 +39,15 @@ The first step is to get the data ingested into our solution.  IoT Hub is the la
 |Pricing and Scale Tier |B1 Basic
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub.png width=600>
+...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub.png width=600>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub2.png width=600>
+...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub2.png width=600>
   
-5. Once the IoT Hub is provisioned, click on **IoT Devices** to go in and create a new device, within the IoT Hub, used for data capture:
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub3-Devices.png width=300>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub3-NewDevice.png width=600>
+5. Once the IoT Hub is provisioned, click on **IoT Devices** to go in and create a new device, within the IoT Hub, used for data capture:
+...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub3-Devices.png width=300>
+
+...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub3-NewDevice.png width=600>
   
 6. Create a device called **MineVehicle**:
   
@@ -59,7 +60,7 @@ The first step is to get the data ingested into our solution.  IoT Hub is the la
 This device will be the intended recipient of the vehicle telemetry events.  Even though our payload will be sending events from multiple vehicles, we can have a single device configured in IoT Hub to act as the recipient device.  The next step will be to get a SAS token that the data producer will use to connect to the IoT Hub and send events.
 
 8. Create Consumer Groups: **asa** and **cli**
-Consumer Groups are a state views of the hub.  They enable multiple consuming applications to each have their own view of the event stream and read the stream independently.  This means when an application stops reading from an event stream, it can continue from where it left off.  It is best practice for each subscriber application to have its own consumer group defined.
+...Consumer Groups are a state views of the hub.  They enable multiple consuming applications to each have their own view of the event stream and read the stream independently.  This means when an application stops reading from an event stream, it can continue from where it left off.  It is best practice for each subscriber application to have its own consumer group defined.
 
 To create a consumer group open the IoT Hub, under Hub Settings > Built-in endpoints, you will see Consumer Groups with the $Default group created.  Add two more consumer groups, one for potential Stream Analytics integration, and another for our command line interace (CLI) applications to connect to:
 
