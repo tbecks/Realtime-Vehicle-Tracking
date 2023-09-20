@@ -38,7 +38,7 @@ The first step is to get the data ingested into our solution.  IoT Hub is the la
   |Resource Group   |Create a new Resource Group called **RealtimeVehicleTracking**
   |IoT Hub Name     |Create a globally unique name ie. *VehicleTrackingIoT*
   |Region           |Choose a region that you will deploy all your services to
-  |Pricing and Scale Tier |B1 Basic
+  |Pricing and Scale Tier |Basic
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub.png width=600>
