@@ -76,6 +76,7 @@ A Shared Access Signature (SAS) token will be required to enable our event gener
 
 1. VS Code using the [Azure IoT Hub Extension](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-toolkit)
 2. [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/iot/hub?view=azure-cli-latest#az_iot_hub_generate_sas_token)
+3. Using [IoT Explorer](https://github.com/Azure/azure-iot-explorer/releases).
 
 For this lab we will walk through the Azure CLI method.  Start by opening up a command prompt and running `az login`
 
@@ -85,7 +86,7 @@ The duration for the token is set in seconds, therefore to set the SAS token to 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub7-SASToken.png width=600>
 
-You will need to use the returned SAS token and update the Python based producer in the next steps.
+You will need to use the returned SAS token and update the Python based producer in the next steps.  Copy the results within the double quotes which start with `SharedAccessSignature sr=`.
 
 ## Setup Python Vehicle Data Producer
 <img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Logo-Python.png width=75>
