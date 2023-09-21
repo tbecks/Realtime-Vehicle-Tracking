@@ -1,10 +1,14 @@
 # Realtime Vehicle Tracking Solution Deployment Guide
 This guide can be used to manually deploy the solution within your own environment.
 
-<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Realtime%20Vehicle%20Tracking%20Lab%20Architecture.png>
+<img src=./img/Realtime%20Vehicle%20Tracking%20Lab%20Architecture.png>
 
-1. [Prerequisites to deploy the solution](#prerequisites-to-deploy-the-solution)
-2. [Part 1: Data Ingestion)(#part-1:-data-ingestion)
+- [Prerequisites to deploy the solution](#prerequisites-to-deploy-the-solution)
+- [Part 1: Data Ingestion](#Part-1:-Data-Ingestion)
+- [Part 2: Data Processing](#Part-2:-Data-Processing)
+- [Part 3: Data Visualization](#Part-3:-Data-Visualization)
+- [Part 4: Data Visualization](#Part-4:-Running-the-Solution)
+- [Part 5: Data Visualization](#Part-5:-Extended-Use-Cases)
 
 ## Prerequisites to deploy the solution
 The following will be required to complete the full deployment for the solution:
@@ -313,7 +317,7 @@ You can now go to the URL of the Web App and test the solution (the URL will be 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AppService-7.png width=600>
 
 
-# Part 5: Running the Solution #
+# Part 4: Running the Solution #
 To start the solution open the map in a browser: [https://realtimevehicles.azurewebsites.net/](https://realtimevehicles.azurewebsites.net/)
 
 With the map open start the python based data producer.  This can be done through VS Code directly, or through a command prompt.  To run the producer through a command prompt:
@@ -326,7 +330,7 @@ With the map open start the python based data producer.  This can be done throug
 
 - Go back to the web browser and you should start to see the vehicles appear and move around the map based on the telemetry from the datafile:
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AppService-9.png width=600>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Realtime-Vehicle-Tracking.gif width=600>
 
 ### Debugging the solution
 In the event you would like to see the events being sent to the browser through the web socket, you can open the browsers development view and see events realtime in the browser.  To do this press `F12` in the browser to open the `developer tools`.  Select the **Console** tab and you will see the events being sent to the browser:
@@ -334,7 +338,7 @@ In the event you would like to see the events being sent to the browser through 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AppService-10.png width=600>
 
 
-# Part 4: Extended Use Cases #
+# Part 5: Extended Use Cases #
 ## Operational Data Capture: Integration with Cosmos DB for PostgreSQL #
 Data can be persisted for for the purposes of operational reporting and analytics.  This enables near realtime analysis, reporting and alerting on the data.  In this use case we will use Cosmos DB for PostgreSQL to persist the data.
 
