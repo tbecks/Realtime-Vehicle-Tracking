@@ -321,9 +321,11 @@ With the map open start the python based data producer.  This can be done throug
 - In this folder is the python script to send events to IoT Hub: `py SendVehicleEvents.py`
 - Run the producer by typing `py SendVehicleEvents.py`
 - You will start to see streaming events being sent to IoT Hub:
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AppService-8.png width=600>
 
 - Go back to the web browser and you should start to see the vehicles appear and move around the map based on the telemetry from the datafile:
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AppService-9.png width=600>
 
 ### Debugging the solution
