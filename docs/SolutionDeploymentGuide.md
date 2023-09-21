@@ -4,11 +4,11 @@ This guide can be used to manually deploy the solution within your own environme
 <img src=./img/Realtime%20Vehicle%20Tracking%20Lab%20Architecture.png>
 
 - [Prerequisites to deploy the solution](#prerequisites-to-deploy-the-solution)
-- [Part 1: Data Ingestion](#Part-1:-Data-Ingestion)
-- [Part 2: Data Processing](#Part-2:-Data-Processing)
-- [Part 3: Data Visualization](#Part-3:-Data-Visualization)
-- [Part 4: Data Visualization](#Part-4:-Running-the-Solution)
-- [Part 5: Data Visualization](#Part-5:-Extended-Use-Cases)
+- [Part 1: Data Ingestion](#part-1:-data-ingestion)
+- [Part 2: Data Processing](#part-2:-data-processing)
+- [Part 3: Data Visualization](#part-3:-data-visualization)
+- [Part 4: Running the Solution](#part-4:-running-the-solution)
+- [Part 5: Extended Use Cases](#part-5:-extended-use-cases)
 
 ## Prerequisites to deploy the solution
 The following will be required to complete the full deployment for the solution:
