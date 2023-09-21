@@ -21,9 +21,8 @@
 
     <script>
         console.log('Start JS');
-        // const baseurl = 'http://localhost:7071';
-        // This is the azure function URL and needs to be updated
-        const baseurl = 'https://vehiclehubpull.azurewebsites.net';
+        // const baseurl = 'http://localhost:7071';  // to run locally
+        const baseurl = '<YOUR FUNCTION APP URL>'; //<-- Change this value with your function URL
         var map, tileLayer;
         var weatherTileUrl = 'https://{azMapsDomain}/map/tile?api-version=2.0&tilesetId={layerName}&zoom={z}&x={x}&y={y}';
 
@@ -34,7 +33,7 @@
                 //Add your Azure Maps subscription key to the map SDK. Get an Azure Maps key at https://azure.com/maps
                 authOptions: {
                     authType: 'subscriptionKey',
-                    subscriptionKey: 'MaRAsIot1DzMQItYmcsfgSQs9scqKQlzqnWAffMaqM8'
+                    subscriptionKey: '<YOUR AZURE MAPS KEY>>' //<-- Change this value with your Azure Maps Key
                 },
                 style: "satellite",
                 zoom: 14.5,
@@ -47,9 +46,9 @@
             map.events.add('ready', function () {
 
                 //Initialize the vehicle icon layers
-                map.imageSprite.add('dozer-icon', 'https://realtimevehicletracking.azurewebsites.net/images/small-dozer.png');
-                map.imageSprite.add('shovel-icon', 'https://realtimevehicletracking.azurewebsites.net/images/shovel.png');
-                map.imageSprite.add('truck-icon', 'https://realtimevehicletracking.azurewebsites.net/images/truck.png');
+                map.imageSprite.add('dozer-icon', 'https://realtimevehicles.azurewebsites.net/images/small-dozer.png'); //<-- Change this value with your Web URL
+                map.imageSprite.add('shovel-icon', 'https://realtimevehicles.azurewebsites.net/images/shovel.png');     //<-- Change this value with your Web URL
+                map.imageSprite.add('truck-icon', 'https://realtimevehicles.azurewebsites.net/images/truck.png');       //<-- Change this value with your Web URL
 
                 //Initialize the weather tile layer.
                 updateTileLayer();
@@ -145,18 +144,26 @@
 
             if (datasource.shapesMap.has(vehicleJson.EquipmentID))
             {
+                // console.log("it already exists")
                 var coords = [ parseFloat(vehicleJson.Longtitude), parseFloat(vehicleJson.Latitude) ]
                 console.log('Vehicle Coordinates: ', vehicleJson.EquipmentID, coords)
                 atlas.animations.setCoordinates(vehicles[vehicleJson.EquipmentID], coords, { duration: 3000, autoPlay: true });
+                // This section of 5 lines is optional if you need to change the attributes of existing vehicles
+                vehicles[vehicleJson.EquipmentID].addProperty('vehicletype', vehicleJson.VehicleType); 
+                vehicles[vehicleJson.EquipmentID].addProperty('name', vehicleJson.EquipmentID);
+
+                if (vehicleJson.VehicleType == 'Shovel') {vehicles[vehicleJson.EquipmentID].addProperty('image', "shovel-icon");}
+                else if (vehicleJson.VehicleType == 'Dozer') {vehicles[vehicleJson.EquipmentID].addProperty('image', "dozer-icon");}
+                else {vehicles[vehicleJson.EquipmentID].addProperty('image', "truck-icon");}
 
             } else {
                 // console.log("its not here")
                 var newVehiclePin = new atlas.Shape(new atlas.data.Point([vehicleJson.Longtitude, vehicleJson.Latitude]), vehicleJson.EquipmentID);
                 newVehiclePin.addProperty('vehicletype', vehicleJson.VehicleType);
-                    // check vechicleJson value of vehicle and attach a shape property to represent the shape image
-                    if (vehicleJson.VehicleType == 'Shovel') {newVehiclePin.addProperty('image', "shovel-icon");}
-                    else if (vehicleJson.VehicleType == 'Dozer') {newVehiclePin.addProperty('image', "dozer-icon");}
-                    else {newVehiclePin.addProperty('image', "truck-icon");}
+                // check vechicleJson value of vehicle and attach a shape property to represent the shape image
+                if (vehicleJson.VehicleType == 'Shovel') {newVehiclePin.addProperty('image', "shovel-icon");}
+                else if (vehicleJson.VehicleType == 'Dozer') {newVehiclePin.addProperty('image', "dozer-icon");}
+                else {newVehiclePin.addProperty('image', "truck-icon");}
                 newVehiclePin.addProperty('name', vehicleJson.EquipmentID);
                 vehicles[vehicleJson.EquipmentID] = newVehiclePin;
                 datasource.add(Object.values(vehicles));
@@ -244,7 +251,7 @@
 
         // load water body data
         function loadWaterData(datasource) {
-        fetch('https://realtimevehicletracking.azurewebsites.net/data/waterbodies.json').then(response => response.json()).then(body => {
+        fetch('https://realtimevehicles.azurewebsites.net/data/waterbodies.json').then(response => response.json()).then(body => {  //<-- Change this value with your Web URL
             datasource.add(body)
         })
         }

@@ -86,7 +86,7 @@ The duration for the token is set in seconds, therefore to set the SAS token to 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-IoTHub7-SASToken.png width=600>
 
-You will need to use the returned SAS token and update the Python based producer in the next steps.  Copy the results within the double quotes which start with `SharedAccessSignature sr=`.
+You will need to use the returned SAS token and update the Python based producer in the next steps.  Copy the results within the double quotes which start with `SharedAccessSignature sr=`
 
 ## Setup Python Vehicle Data Producer
 <img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Logo-Python.png width=75>
@@ -104,6 +104,10 @@ In the file look for the section below `# Replace the following variables with y
 - `sas`
 - `iotHub`
 - `deviceId`
+
+<img src=./img/Deploy-Producer-Setup.png width=300>
+
+Optionally you can also change the source of your data, for this lab we will use the existing `AllVehicles.csv` source file.
 
 ### Test the Producer
 We now want to test that we can successfully send data from our Python data producer to our IoT Hub.  This will validate that the producer is properly configured and the solution is receiving data in Azure.  The easiest way to verify that data is arriving on the IoT Hub is to use the Azure CLI commands:
@@ -135,12 +139,14 @@ This validates that we can subscribe to our IoT Hub and subscribe to the event s
 ---
 # Part 2: Data Processing
 ## SignalR Configuration
-<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Logo-SignalR.png width=75>
+<img src=./img/Logo-SignalR.png width=75>
 
 [Azure SignalR Service](https://docs.microsoft.com/en-us/azure/azure-signalr/signalr-overview) simplifies the process of adding real-time web functionality to applications over HTTP web connections. This real-time functionality allows the service to push content updates to connected clients, such as a single page web or mobile application. Clients are updated without having to poll the server for new data.  For our solution SignalR will be used to push events to our Azure Maps web interface, however, there are many other destinations and use cases which this pattern supports.
 
 1. Create a new SignalR service from the Azure Portal.
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-SignalR-1.png width=600>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-SignalR-1.png width=600>
+
+Note: Ensure you update the pricing and service mode settings.
 
 2. Once provisioned go in to the overview of you SignalR service and make note of the *connection string* as we will need to use this later on. 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-SignalR-2.png width=600>
@@ -173,78 +179,170 @@ There are two functions as part of the solution that we will be deploying:
 - *negotiate* - Negotiates a SignalR Connection to the Web App 
 
 1. Start by deploying an Azure Function instance in Azure:
-  
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzureFunction-0.png width=200>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzureFunction-1.png width=600>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AzureFunction-1.png width=600>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AzureFunction-1b.png width=600>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzureFunction-2.png width=600>
 
 Note: There is no requirement to have Application Insight Enabled.
 
-2. Once the Function App service is provisioned, we need to deploy the provided code to the Azure Function service to create the new functions.  Ensure that you have downloaded the solution source code from GitHub and open with VS Code.  
+2. Once the Function App service is provisioned, we need to deploy the provided code to the Azure Function service to create the new functions.  Ensure that you have downloaded the solution source code from GitHub and open with VS Code. 
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzureFunction-3.png width=600>
 
-  
-***** Ensure prerequisit has downloading the code locally. and opening with VS Code.
-FIX THIS:
-- log into azure, go into azure function > configuration and add the following settings:
-- `AzureWebJobsStorage` 
-- `FUNCTIONS_WORKER_RUNTIME`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AzureFunction-3.png width=300>
+
+- In the Azure portal navigate to your Azure Function App to configure some key settings:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AzureFunction-2b.png width=600>
+
+The following settings need to be defined in the Function App Configuration section:
 - `AzureIOTHubConnectionString`
 - `AzureSignalRConnectionString`
 
 *Note: Bicep template will create the functions and configuration*
-- ADD SCREEN SHOT 
 
 These settings can also be found in the `local.settings.json` file with your environment values:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AzureFunction-4.png width=600>
 
   |Configuration Parameter|Where to Get Value|
   |---|---|
-  |AzureWebJobsStorage|(insert link)|
-  |AzureIOTHubConnectionString|(insert link)|
-  |AzureSignalRConnectionString|(insert link)|
-  
-`Build` and `Deploy` the project to the Azure Functions service.  From the VS Code terminal window run `dotnet build` (or right click the project file and select **Build .NET Core project**).  Once build deploy the solution in VS Code by running the following commands:
+  |AzureIOTHubConnectionString|IoT Hub > Built-in Endpoints > Event Hub-compatible endpoint
+|
+  |AzureSignalRConnectionString|SignalR > Connection Strings > For Access Key - Connection String|
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AzureFunction-7.png width=600>
+
+### Deploy Function Code
+We will deploy the funciton code from Visual Studio Code.  
+
+Start by opening VS Code and logging into Azure:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AzureFunction-8.png width=200>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AzureFunction-9.png width=200>
+
+**Optional:** `Build` and `Deploy` the project to the Azure Functions service.  From the VS Code terminal window run `dotnet build` (or right click the project file and select **Build .NET Core project**).  
+
+Deploy the solution in VS Code by running the following commands in VS Code:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AzureFunction-10.png width=600>
 
 - Open the Command Pallette (Ctl-Shift-P)
 - Type `Azure Functions: Deploy to function app`
-- Walk through the prompts to deploy to the Azure Functions service you deployed previously
+- Walk through the prompts to deploy to the Azure Functions service 
 
-Ensure the funciton successfully deploys.
+Note: If you are prompted click on `Update and Deploy`
 
-## Azure App Service
-The App Service will provide the web based front end.  Create a App Service instance in the Azure Portal:
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AppService-1.png width=600>
+Ensure the funciton successfully deploys.  You should see the following message after the deployment is complete:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AzureFunction-11.png width=300>
+
+You can confirm the functions are deployed by navigating to the Azure Function App in the Azure Portal and selecting **Functions** from the left menu.  You should see the two functions deployed:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AzureFunction-12.png width=300>
+
+## Azure Web App
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AppService-0.png width=80>
+
+The App Service will provide the web based front end to the solution.  It provides a web socket connection to the SignalR service to receive events from the Azure Functions service.  The web app is a simple HTML page with Javascript to render the map and vehicle locations.
+
+Create a App Service instance in the Azure Portal:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AppService-1.png width=600>
 
 The name needs to be unique and will form your sites URL.  Select PHP as the runtime stack as we are using a simple HTML page with Javascript.  Make note of the App Service URL, this will be used to access the web front end from a browser.
 
+### Deploy Web App Code
+
+You should now have all the required services deployed in Azure:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AppService-1b.png width=600>
+
+#### Azure Function CORS Configuration
+
+In order to allow the Azure Maps Service to communicate with the Azure Functions, you will need to make a configurtion change to the Azure Functions service.  
+
+Navigate to the Azure Functions service in the Azure Portal and select **Platform Features > CORS** from the left menu.  Add the following URL to the list of allowed origins:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AppService-1c.png width=600>
+
+In our case we will add `https://realtimevehicles.azurewebsites.net` to the allowed origins list.  Click `Save` to save the changes.
+
+
+#### Modify Web App Code
 Open VS Code and ensure you have the Azure App Service extension installed:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AppService-3.png width=600>
 
-Then Open the Azure blade and navigate to the Azure App Service section to deploy the web source code to the App Service in Azure:
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=https://github.com/tbecks/Realtime-Vehicle-Tracking/blob/main/docs/img/Deploy-AppService-2.png width=600>
+In VS Code go into the "Explorer" blade to navigate the code base.  In the "Web" folder click the "Index.html" file. Replace the following values:
 
-This will open the command pallet at the top, follow the steps to choose which folder to deploy to your App Service:
+- baseurl (the url of your Azure Function App)
+- subscriptionKey (the key to your Azure Maps service)
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AppService-3a.png width=600>
+
+In addition, update the references to the web URL in the same index.html file:
+
+For Images:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AppService-3b.png width=600>
+
+For Features:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AppService-3c.png width=600>
+
+#### Deploy Web App
+Now we can deploy the web app code to the App Service.  
+
+Open the Azure blade and navigate to the Azure App Service section.  Open App Services and right click on the App Service you created.  Select **Deploy to Web App**:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AppService-3d.png width=500>
+
+
+This will open the command pallet at the top, select `Browse` and follow the steps to choose which folder to deploy to your App Service:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AppService-4.png width=500>
+
 - Navigate to the web folder of the solution repo
-- settings:
--   configure > web sockets on?
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AppService-5.png width=500>
+
+Once the deployment is complete you should see the following message:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AppService-6.png width=300>
+
+You can now go to the URL of the Web App and test the solution (the URL will be unique for your deployment).  For now you will see a blank map zoomed in on a mine site: [https://realtimevehicles.azurewebsites.net/](https://realtimevehicles.azurewebsites.net/)
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AppService-7.png width=600>
+
 
 # Part 5: Running the Solution #
-- open map
-- start producer
-- watch vehicles move around
--
+To start the solution open the map in a browser: [https://realtimevehicles.azurewebsites.net/](https://realtimevehicles.azurewebsites.net/)
+
+With the map open start the python based data producer.  This can be done through VS Code directly, or through a command prompt.  To run the producer through a command prompt:
+- Open a command prompt in the producer folder: `.\Realtime-Vehicle-Tracking\producer\`
+- In this folder is the python script to send events to IoT Hub: `py SendVehicleEvents.py`
+- Run the producer by typing `py SendVehicleEvents.py`
+- You will start to see streaming events being sent to IoT Hub:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AppService-8.png width=600>
+
+- Go back to the web browser and you should start to see the vehicles appear and move around the map based on the telemetry from the datafile:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AppService-9.png width=600>
+
+### Debugging the solution
+In the event you would like to see the events being sent to the browser through the web socket, you can open the browsers development view and see events realtime in the browser.  To do this press `F12` in the browser to open the `developer tools`.  Select the **Console** tab and you will see the events being sent to the browser:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src=./img/Deploy-AppService-10.png width=600>
+
 
 # Part 4: Extended Use Cases #
-## Data Lake Historical Data Capture #
+## Operational Data Capture: Integration with Cosmos DB for PostgreSQL #
+Data can be persisted for for the purposes of operational reporting and analytics.  This enables near realtime analysis, reporting and alerting on the data.  In this use case we will use Cosmos DB for PostgreSQL to persist the data.
+
+## Historical Data Capture: Integration with Lakehouse #
 To persist data long term for the purposes of analytics:
 - create a new Data Lake Storage Account
 - create a route in IoT Hub to send data to the Data Lake Container
 - create a new Default route (this is critical as creating a custom route will shut off the existing default route so you will need to explicitly create a new one
 
-## Data Transformation with Azure Stream Analytics #
+## Streaming Data Transformation with Azure Stream Analytics #
 - using ASA jobs to transform daa
 
 ## Data Transformation with Databricks Spark Streaming Job #
